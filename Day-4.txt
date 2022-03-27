@@ -1,0 +1,111 @@
+							Insert Delete GetRandom O(1)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class RandomizedSet {
+    set<int>st;
+
+public:
+    RandomizedSet() {
+    }
+    
+    bool insert(int val) {
+        if(st.find(val)==st.end())
+        {
+            st.insert(val);
+            return true;
+        }
+        else
+            return false;
+    }
+    
+    bool remove(int val) {
+        if(st.find(val)==st.end())
+            return false;
+        else
+        {
+            st.erase(val);
+            return true;
+        }
+    }
+    
+    int getRandom() {
+        int n = rand() % st.size();
+        auto rand_ptr=next(st.begin(),n);
+        return *rand_ptr;    
+    }
+};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+							Subarray Sum Equals K
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    int subarraySum(vector<int>& nums, int k) {
+        int n=nums.size();
+        int sum=0,ans=0;
+        map<int,int>mp;
+        for(int i=0;i<n;i++)
+        {
+            sum+=nums[i];
+            if(sum==k) ans++;
+            if(mp.find(sum-k)!=mp.end())
+            {
+                ans+=mp[sum-k];
+            }
+            mp[sum]++;
+        }
+        return ans;
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+							Next Permutation
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////						
+    void nextPermutation(vector<int>& nums) {
+        int index1=-1,index2;
+        int n=nums.size();
+        for(int i=n-2;i>=0;i--)
+        {
+            if(nums[i]<nums[i+1])
+            {
+                index1=i;
+                break;
+            } 
+        }
+        if(index1<0){
+            reverse(nums.begin(),nums.end());
+        }
+        else{ 
+            for(int i=n-1;i>=0;i--)
+            {
+                if(nums[index1]<nums[i])
+                {
+                    index2=i;
+                    break;
+                }
+            }
+            swap(nums[index1],nums[index2]);
+            reverse(nums.begin()+index1+1,nums.end());
+        }
+    }		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+							Container With Most Water
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int maxArea(vector<int>& height) {
+        int n=height.size();
+        int max_water=0,cur_water=0;
+        int start=0,end=n-1;
+        while(start<end)
+        {
+            cur_water = min(height[start],height[end])*(end-start);
+            max_water = max(max_water,cur_water);
+            if(height[start]<height[end])
+            {
+                start++;
+            }
+            else if(height[start]>height[end])
+            {
+                end--;
+            }
+            else
+            {
+                start++;
+                end--;
+            } 
+        }
+        return max_water;
+    }							
