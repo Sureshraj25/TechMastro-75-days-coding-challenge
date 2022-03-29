@@ -1,0 +1,54 @@
+									Spiral Matrix
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        int n=matrix.size();
+        int m=matrix[0].size();
+        int left=0,right=m-1,top=0,bottom=n-1,count=0;
+        vector<int>ans;
+        while(left<=right && top<=bottom)
+        {
+            for(int i=left;i<=right;i++)
+            {
+                ans.push_back(matrix[top][i]);
+                count++;
+            }
+            
+            for(int i=top+1;i<=bottom;i++)
+            {
+                ans.push_back(matrix[i][right]);
+                count++;
+            }
+            
+            for(int i=right-1;i>=left && count<(n*m);i--)
+            {
+                ans.push_back(matrix[bottom][i]);
+                count++;
+            }
+            
+            for(int i=bottom-1;i>top && count<(n*m);i--)
+            {
+                ans.push_back(matrix[i][left]);
+                count++;
+            }
+            left++,top++,right--,bottom--;
+        }
+        return ans;
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+										Game of Life
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ void rotate(vector<vector<int>>& matrix) {
+        int n=matrix.size();
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                swap(matrix[i][j],matrix[j][i]);
+            }
+        }
+        for(int i=0;i<n;i++)
+        {
+            reverse(matrix[i].begin(),matrix[i].end());
+        }
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
