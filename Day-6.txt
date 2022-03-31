@@ -1,0 +1,88 @@
+								3 sum close
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int threeSumClosest(vector<int>& nums, int target) {
+        int ans=0;
+        int start=0,end=nums.size()-1;
+        sort(nums.begin(),nums.end());
+        int cur_diff=INT_MAX,diff=INT_MAX,cur_sum=0,close_sum=0;
+        for(int i=0;i<nums.size()-2;i++)
+        {
+            start=i+1;
+            end=nums.size()-1;
+            while(start<end)
+            {
+                cur_sum=nums[i]+nums[start]+nums[end];
+                if(cur_sum==target) return cur_sum;
+                
+                if(cur_sum<target)
+                {
+                    start++;
+                }
+                else
+                {
+                    end--;
+                }
+                cur_diff=abs(cur_sum-target);
+                if(cur_diff<diff)
+                {
+                    diff=cur_diff;
+                    close_sum=cur_sum;
+                }
+            }
+        }
+        return close_sum;
+    }
+};
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								Pairs of Songs With Total Durations Divisible by 60
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    int numPairsDivisibleBy60(vector<int>& time) {
+        unordered_map<int,int> songMap;
+        int pairsCount = 0,minutesNeeded=0,rem_min=0;
+        for (int index = 0; index < time.size(); index++){
+            minutesNeeded = 60 - (time[index] % 60);
+            rem_min = (minutesNeeded!=60) ? minutesNeeded:0;
+            if (songMap.find(rem_min)!=songMap.end()){
+                pairsCount += songMap[rem_min];
+            }
+            songMap[time[index] % 60]++;
+        }
+        return pairsCount;
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+							4Sum	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////								
+ vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        int start=0,end=nums.size()-1;
+        sort(nums.begin(),nums.end());
+        long sum=0;
+        vector<vector<int>>ans;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(i>0 && nums[i]==nums[i-1]) continue;
+            for(int j=i+1;j<nums.size();j++){
+                if(j>i+1 && nums[j]==nums[j-1]) continue;
+                start=j+1;
+                end=nums.size()-1;
+                while(start<end)
+                {
+                    sum=(long)nums[i]+nums[j]+nums[start]+nums[end];
+                    if(sum==target) {
+                        ans.push_back({nums[i],nums[j],nums[start],nums[end]});
+                         start++;
+                        while(nums[start]==nums[start-1] && start<end)
+                            start++;
+                    }
+                    else if(sum<target)
+                    {
+                        start++;
+                    }
+                    else
+                    {
+                        end--;
+                    }
+                }
+            }
+        }
+        return ans;
+    }								
